@@ -1,0 +1,7 @@
+domain: symfony-conversation.wex
+global:
+  name: symfony-conversation
+  type: php-package
+  version: 1.0.0
+wex:
+  version: 6.0.183
