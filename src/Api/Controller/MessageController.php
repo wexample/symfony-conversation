@@ -4,6 +4,12 @@ namespace Wexample\SymfonyConversation\Api\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Wexample\SymfonyApi\Api\Attribute\QueryOption\LengthQueryOption;
+use Wexample\SymfonyApi\Api\Attribute\QueryOption\PageQueryOption;
+use Wexample\SymfonyApi\Api\Attribute\QueryOption\StringQueryOption;
+use Wexample\SymfonyApi\Api\Attribute\ValidateRequestContent;
+use Wexample\SymfonyApi\Api\Class\ApiResponse;
+use Wexample\SymfonyApi\Api\Controller\AbstractApiController;
 use Wexample\SymfonyConversation\Api\Dto\Entity\ConversationMessage\CreateMessageDto;
 use Wexample\SymfonyConversation\Api\Normalizer\Entity\ConversationMessage\DefaultMessageNormalizer;
 use Wexample\SymfonyConversation\Entity\ConversationMessage;
@@ -11,12 +17,6 @@ use Wexample\SymfonyConversation\Repository\ConversationRepository;
 use Wexample\SymfonyConversation\Repository\MessageRepository;
 use Wexample\SymfonyConversation\Repository\ParticipantRepository;
 use Wexample\SymfonyConversation\Repository\UserParticipantRepository;
-use Wexample\SymfonyApi\Api\Attribute\QueryOption\LengthQueryOption;
-use Wexample\SymfonyApi\Api\Attribute\QueryOption\PageQueryOption;
-use Wexample\SymfonyApi\Api\Attribute\QueryOption\StringQueryOption;
-use Wexample\SymfonyApi\Api\Attribute\ValidateRequestContent;
-use Wexample\SymfonyApi\Api\Class\ApiResponse;
-use Wexample\SymfonyApi\Api\Controller\AbstractApiController;
 use Wexample\SymfonyHelpers\Controller\AbstractController;
 use Wexample\SymfonyHelpers\Voter\AbstractEntityVoter;
 
