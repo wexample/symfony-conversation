@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Wexample\SymfonyConversation\:
+        resource: '../../{EventListener,Repository,Security,Service}'
+
+    Wexample\SymfonyConversation\Api\Controller\:
+        resource: '../../Api/Controller/*'
+        tags: ['controller.service_arguments']
+
+    Wexample\SymfonyConversation\Api\Normalizer\:
+        resource: '../../Api/Normalizer/*'
+        tags: ['serializer.normalizer']
+
+    # How a person reads in a conversation; an application with faces of its
+    # own aliases its presenter here.
+    Wexample\SymfonyConversation\Interface\ConversationPersonPresenterInterface:
+        alias: Wexample\SymfonyConversation\Service\ConversationPersonPresenter

@@ -7,5 +7,38 @@
     "psr-4": {
       "Wexample\\SymfonyConversation\\": "src/"
     }
+  },
+  "description": "Conversations held in the application: people and agents taking part, each message by its author, the mentions it makes, what each participant last read; read and written by the participants alone, followed live",
+  "authors": [
+    {
+      "name": "weeger",
+      "email": "romain.weeger@wexample.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.5",
+    "doctrine/orm": "^3.0",
+    "symfony/security-core": "^7.4 || ^8.0",
+    "symfony/uid": ">=6.2",
+    "wexample/php-pseudocode": ">=3.1.0",
+    "wexample/symfony-api": ">=17.0.0",
+    "wexample/symfony-design-system": ">=43.0.0",
+    "wexample/symfony-helpers": ">=19.1.0",
+    "wexample/symfony-live": ">=5.8.0",
+    "wexample/symfony-pseudocode": ">=4.0.2"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../*",
+      "options": {
+        "symlink": true
+      }
+    }
+  ],
+  "extra": {
+    "install": {
+      "bundle_env": "all"
+    }
   }
 }

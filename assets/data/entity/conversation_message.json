@@ -1,0 +1,52 @@
+{
+    "name": "conversation_message",
+    "type": "class",
+    "description": "One line of a conversation: who wrote it, what it says, when, whom it names.",
+    "properties": [
+        {
+            "name": "id",
+            "type": "Symfony\\Component\\Uid\\Uuid",
+            "nullable": false
+        },
+        {
+            "name": "conversation",
+            "type": "string",
+            "nullable": false
+        },
+        {
+            "name": "author",
+            "type": "array",
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "nullable": true
+        },
+        {
+            "name": "body",
+            "type": "string",
+            "nullable": true
+        },
+        {
+            "name": "dateCreated",
+            "type": "DateTimeInterface",
+            "nullable": true
+        },
+        {
+            "name": "tokens",
+            "type": "int",
+            "nullable": true
+        },
+        {
+            "name": "providerMessageIdentifier",
+            "type": "string",
+            "nullable": true
+        },
+        {
+            "name": "mentions",
+            "type": "array",
+            "nullable": false
+        }
+    ]
+}

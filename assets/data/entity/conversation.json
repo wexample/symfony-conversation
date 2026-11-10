@@ -1,0 +1,56 @@
+{
+    "name": "conversation",
+    "type": "class",
+    "description": "A conversation held in the application: who takes part in it, and when it last spoke.",
+    "discriminator": {
+        "property": "kind",
+        "value": "conversation"
+    },
+    "properties": [
+        {
+            "name": "id",
+            "type": "Symfony\\Component\\Uid\\Uuid",
+            "nullable": false
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "nullable": true
+        },
+        {
+            "name": "dateCreated",
+            "type": "DateTimeInterface",
+            "nullable": true
+        },
+        {
+            "name": "dateLastMessage",
+            "type": "DateTimeInterface",
+            "nullable": true
+        },
+        {
+            "name": "participants",
+            "type": "array",
+            "nullable": false
+        },
+        {
+            "name": "me",
+            "type": "string",
+            "nullable": true
+        },
+        {
+            "name": "lastMessage",
+            "type": "string",
+            "nullable": true
+        },
+        {
+            "name": "unread",
+            "type": "int",
+            "nullable": false
+        },
+        {
+            "name": "kind",
+            "type": "string",
+            "nullable": false
+        }
+    ]
+}
