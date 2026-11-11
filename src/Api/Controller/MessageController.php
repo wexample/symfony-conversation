@@ -18,6 +18,7 @@ use Wexample\SymfonyConversation\Repository\MessageRepository;
 use Wexample\SymfonyConversation\Repository\ParticipantRepository;
 use Wexample\SymfonyConversation\Repository\UserParticipantRepository;
 use Wexample\SymfonyHelpers\Controller\AbstractController;
+use Wexample\SymfonyHelpers\Entity\Interfaces\UserEntityInterface;
 use Wexample\SymfonyHelpers\Voter\AbstractEntityVoter;
 
 /**
@@ -75,7 +76,11 @@ class MessageController extends AbstractApiController
             conversation: $conversation,
             type: ConversationMessage::TYPE_TEXT,
             body: $body,
-            author: $userParticipantRepository->findOneByConversationAndUser($conversation, $this->getUser()),
+            // An application without accounts — a tool run on one's own
+            // machine — writes the words of nobody in particular.
+            author: ($user = $this->getUser()) instanceof UserEntityInterface
+                ? $userParticipantRepository->findOneByConversationAndUser($conversation, $user)
+                : null,
             mentions: $mentions,
         );
 

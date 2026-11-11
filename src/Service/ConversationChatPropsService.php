@@ -21,11 +21,14 @@ final readonly class ConversationChatPropsService
     }
 
     /**
+     * Nobody signed in — an application without accounts —, the chat has no
+     * reader among the people: every line is someone else's.
+     *
      * @return array{conversationId: string, me: ?string, people: list<array>, unreadSince: ?string}
      */
-    public function props(Conversation $conversation, UserEntityInterface $user): array
+    public function props(Conversation $conversation, ?UserEntityInterface $user): array
     {
-        $me = $this->userParticipants->findOneByConversationAndUser($conversation, $user);
+        $me = $user ? $this->userParticipants->findOneByConversationAndUser($conversation, $user) : null;
 
         return [
             'conversationId' => (string) $conversation->getId(),

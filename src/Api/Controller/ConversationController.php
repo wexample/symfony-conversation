@@ -117,7 +117,13 @@ class ConversationController extends AbstractApiController
         ConversationService $conversationService,
     ): ApiResponse {
         $conversation = $this->findGranted($conversationRepository, $id, AbstractEntityVoter::VIEW);
-        $conversationService->markRead($userParticipantRepository->findOneByConversationAndUser($conversation, $this->getUser()));
+        $user = $this->getUser();
+
+        // Nobody signed in — an application without accounts —: nobody's
+        // reading to keep.
+        if ($user instanceof UserEntityInterface) {
+            $conversationService->markRead($userParticipantRepository->findOneByConversationAndUser($conversation, $user));
+        }
 
         return self::apiResponseSuccess();
     }
