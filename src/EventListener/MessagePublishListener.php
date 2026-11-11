@@ -9,12 +9,17 @@ use Doctrine\ORM\Events;
 use Symfony\Contracts\Service\ResetInterface;
 use Wexample\SymfonyConversation\Api\Normalizer\Entity\ConversationMessage\DefaultMessageNormalizer;
 use Wexample\SymfonyConversation\Entity\ConversationMessage;
+use Wexample\SymfonyConversation\Entity\UserConversationParticipant;
+use Wexample\SymfonyConversation\Repository\ParticipantRepository;
+use Wexample\SymfonyConversation\Service\ConversationUnreadService;
 use Wexample\SymfonyLive\Enum\LiveTopicAction;
 use Wexample\SymfonyLive\Helper\LiveTopicHelper;
 use Wexample\SymfonyLive\Service\LivePublisherService;
 
 /**
  * Says on the conversation's topic that a line was written, whoever wrote it.
+ * And to each of the people it was written to, on their own topic, how many
+ * lines now wait for them (ConversationUnreadService).
  *
  * Published on the conversation and not on the line: a reader opens it before
  * the next line exists. Doctrine is listened to rather than the repository, as
@@ -34,6 +39,8 @@ class MessagePublishListener implements ResetInterface
     public function __construct(
         private readonly LivePublisherService $publisher,
         private readonly DefaultMessageNormalizer $normalizer,
+        private readonly ParticipantRepository $participants,
+        private readonly ConversationUnreadService $unread,
     ) {
     }
 
@@ -56,6 +63,7 @@ class MessagePublishListener implements ResetInterface
     {
         $pending = $this->pending;
         $this->pending = [];
+        $readers = [];
 
         foreach ($pending as $message) {
             $this->publisher->publishEvent(
@@ -63,6 +71,19 @@ class MessagePublishListener implements ResetInterface
                 self::EVENT_MESSAGE_CREATED,
                 $this->normalizer->normalize($message)
             );
+
+            // Asked rather than read off the conversation: someone who just
+            // joined is not in the collection it was loaded with.
+            foreach ($this->participants->findByConversation($message->getConversation()) as $participant) {
+                if ($participant instanceof UserConversationParticipant && $participant !== $message->getAuthor()) {
+                    $readers[(string) $participant->getUser()->getId()] = $participant->getUser();
+                }
+            }
+        }
+
+        // Once each, however many lines the flush wrote them.
+        foreach ($readers as $reader) {
+            $this->unread->publishFor($reader);
         }
     }
 }

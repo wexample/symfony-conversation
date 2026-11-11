@@ -32,8 +32,38 @@ const ConversationChatMixin = {
     }
   },
 
+  data() {
+    return {
+      // Whether the reader has the conversation before them: drawn, in a
+      // zone that is open. A chat kept in a closed dock is not read.
+      isSeen: false
+    };
+  },
+
+  // Read once seen, and again each time it comes back into view: what was
+  // written while its zone was closed is read when the zone opens.
   mounted() {
-    this.markRead();
+    if (!(this.$el instanceof Element) || typeof IntersectionObserver === 'undefined') {
+      this.isSeen = true;
+      this.markRead();
+
+      return;
+    }
+
+    this.seenObserver = new IntersectionObserver((entries) => {
+      const seen = entries.some((entry) => entry.isIntersecting);
+
+      if (seen && !this.isSeen) {
+        this.markRead();
+      }
+
+      this.isSeen = seen;
+    });
+    this.seenObserver.observe(this.$el);
+  },
+
+  beforeUnmount() {
+    this.seenObserver?.disconnect();
   },
 
   methods: {
@@ -119,9 +149,11 @@ const ConversationChatMixin = {
     },
 
     // A line from the other side, arriving while the reader looks at the
-    // conversation, is read as it comes.
+    // conversation, is read as it comes; unseen, it waits.
     onIncomingMessage() {
-      this.markRead();
+      if (this.isSeen) {
+        this.markRead();
+      }
     },
 
     async markRead() {

@@ -9,7 +9,9 @@ use Wexample\SymfonyConversation\Entity\Conversation;
 use Wexample\SymfonyConversation\Entity\ConversationMessage;
 use Wexample\SymfonyConversation\Entity\ConversationParticipant;
 use Wexample\SymfonyConversation\Entity\Traits\Manipulator\MessageEntityManipulatorTrait;
+use Wexample\SymfonyConversation\Entity\UserConversationParticipant;
 use Wexample\SymfonyConversation\Event\MessageCreatedEvent;
+use Wexample\SymfonyHelpers\Entity\Interfaces\UserEntityInterface;
 use Wexample\SymfonyHelpers\Repository\AbstractRepository;
 
 /**
@@ -138,5 +140,23 @@ class MessageRepository extends AbstractRepository
         }
 
         return (int) $builder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * What others wrote, in every conversation the person takes part in,
+     * since they last read each.
+     */
+    public function countUnreadForUser(UserEntityInterface $user): int
+    {
+        $alias = $this->getEntityQueryAlias();
+
+        return (int) $this->createQueryBuilder($alias)
+            ->select('COUNT('.$alias.'.id)')
+            ->innerJoin(UserConversationParticipant::class, 'reader', 'ON', 'reader.conversation = '.$alias.'.conversation AND reader.user = :user')
+            ->andWhere($alias.'.author IS NULL OR '.'IDENTITY('.$alias.'.author) != reader.id')
+            ->andWhere('reader.dateLastRead IS NULL OR '.$alias.'.dateCreated > reader.dateLastRead')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

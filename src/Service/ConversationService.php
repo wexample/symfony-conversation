@@ -18,6 +18,7 @@ final readonly class ConversationService
     public function __construct(
         private EntityManagerInterface $entityManager,
         private UserParticipantRepository $participants,
+        private ConversationUnreadService $unread,
     ) {
     }
 
@@ -62,6 +63,8 @@ final readonly class ConversationService
     {
         $participant->setDateLastRead(new \DateTime());
         $this->entityManager->flush();
+        // Fewer lines wait for them: said to whatever shows how many.
+        $this->unread->publishFor($participant->getUser());
     }
 
     /**
