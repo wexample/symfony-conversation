@@ -24,11 +24,8 @@ const ConversationChatMixin = {
       type: String,
       default: null
     },
-    // Read as a messenger is: the reader's lines on their side, the days apart.
-    layout: {
-      type: String,
-      default: 'aligned'
-    },
+    // Read as a channel is — every line at the start, its author first —,
+    // the days apart.
     dayDividers: {
       type: Boolean,
       default: true
