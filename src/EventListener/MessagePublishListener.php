@@ -6,6 +6,9 @@ use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Events;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Mercure\Exception\ExceptionInterface as MercureExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ExceptionInterface as HttpClientExceptionInterface;
 use Symfony\Contracts\Service\ResetInterface;
 use Wexample\SymfonyConversation\Api\Normalizer\Entity\ConversationMessage\DefaultMessageNormalizer;
 use Wexample\SymfonyConversation\Entity\ConversationMessage;
@@ -41,6 +44,7 @@ class MessagePublishListener implements ResetInterface
         private readonly DefaultMessageNormalizer $normalizer,
         private readonly ParticipantRepository $participants,
         private readonly ConversationUnreadService $unread,
+        private readonly ?LoggerInterface $logger = null,
     ) {
     }
 
@@ -64,17 +68,28 @@ class MessagePublishListener implements ResetInterface
         $pending = $this->pending;
         $this->pending = [];
         $readers = [];
+        $participantsByConversation = [];
 
         foreach ($pending as $message) {
-            $this->publisher->publishEvent(
-                LiveTopicHelper::entity($message->getConversation(), LiveTopicAction::EVENT),
-                self::EVENT_MESSAGE_CREATED,
-                $this->normalizer->normalize($message)
+            $conversation = $message->getConversation();
+            $topic = LiveTopicHelper::entity($conversation, LiveTopicAction::EVENT);
+
+            $this->publishSafely(
+                fn () => $this->publisher->publishEvent(
+                    $topic,
+                    self::EVENT_MESSAGE_CREATED,
+                    $this->normalizer->normalize($message)
+                ),
+                $topic
             );
 
             // Asked rather than read off the conversation: someone who just
-            // joined is not in the collection it was loaded with.
-            foreach ($this->participants->findByConversation($message->getConversation()) as $participant) {
+            // joined is not in the collection it was loaded with. Asked once
+            // per conversation, however many lines the flush wrote in it.
+            $participants = $participantsByConversation[spl_object_id($conversation)]
+                ??= $this->participants->findByConversation($conversation);
+
+            foreach ($participants as $participant) {
                 if ($participant instanceof UserConversationParticipant && $participant !== $message->getAuthor()) {
                     $readers[(string) $participant->getUser()->getId()] = $participant->getUser();
                 }
@@ -83,7 +98,30 @@ class MessagePublishListener implements ResetInterface
 
         // Once each, however many lines the flush wrote them.
         foreach ($readers as $reader) {
-            $this->unread->publishFor($reader);
+            $this->publishSafely(
+                fn () => $this->unread->publishFor($reader),
+                LiveTopicHelper::entity($reader, LiveTopicAction::EVENT)
+            );
+        }
+    }
+
+    /**
+     * The flush already committed; telling the subscribers is a courtesy on
+     * top of it, as in LiveEntityPublishListener. A hub that is down must not
+     * turn a written line into a failed request, nor keep the next lines of the
+     * same flush from being announced.
+     */
+    private function publishSafely(
+        callable $publish,
+        string $topic
+    ): void {
+        try {
+            $publish();
+        } catch (HttpClientExceptionInterface | MercureExceptionInterface $exception) {
+            $this->logger?->warning(
+                'Live update not published, the hub is unreachable: {message}',
+                ['message' => $exception->getMessage(), 'topic' => $topic]
+            );
         }
     }
 }
