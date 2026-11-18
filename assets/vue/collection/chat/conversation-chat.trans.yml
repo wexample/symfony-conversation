@@ -4,3 +4,87 @@ en:
 fr:
   author:
     system: Conversation
+
+zh:
+  author:
+    system: 对话
+
+ar:
+  author:
+    system: محادثة
+
+hi:
+  author:
+    system: संवाद
+
+he:
+  author:
+    system: שיחה
+
+fa:
+  author:
+    system: گفتگو
+
+ur:
+  author:
+    system: گفتگو
+
+ja:
+  author:
+    system: 会話
+
+ko:
+  author:
+    system: 대화
+
+bn:
+  author:
+    system: আলাপ
+
+th:
+  author:
+    system: การสนทนา
+
+de:
+  author:
+    system: Gespräch
+
+fi:
+  author:
+    system: Keskustelu
+
+ru:
+  author:
+    system: Беседа
+
+pl:
+  author:
+    system: Rozmowa
+
+es:
+  author:
+    system: Conversación
+
+it:
+  author:
+    system: Conversazione
+
+pt_BR:
+  author:
+    system: Conversa
+
+tr:
+  author:
+    system: Sohbet
+
+vi:
+  author:
+    system: 'Cuộc trò chuyện'
+
+id:
+  author:
+    system: Percakapan
+
+nl:
+  author:
+    system: Gesprek

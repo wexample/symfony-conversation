@@ -1,0 +1,128 @@
+{
+    "vue/collection/chat/conversation-chat.ar.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.bn.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.de.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.es.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.fa.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.fi.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.he.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.hi.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.id.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.it.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.ja.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.ko.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.nl.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.pl.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.pt_BR.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.ru.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.th.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.tr.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.ur.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.vi.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    },
+    "vue/collection/chat/conversation-chat.zh.yml": {
+        "author.system": {
+            "hash": "79c71eae5b788c987b6e92268851c126",
+            "engine": "syrtis"
+        }
+    }
+}
