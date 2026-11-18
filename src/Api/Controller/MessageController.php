@@ -2,6 +2,7 @@
 
 namespace Wexample\SymfonyConversation\Api\Controller;
 
+use Wexample\SymfonyApi\Api\Attribute\ApiAccess;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Wexample\SymfonyApi\Api\Attribute\QueryOption\LengthQueryOption;
@@ -26,6 +27,7 @@ use Wexample\SymfonyHelpers\Voter\AbstractEntityVoter;
  * conversation: a line says nothing on its own.
  */
 #[Route(path: '_api/conversation-message/', name: 'api_conversation_message_')]
+#[ApiAccess(ApiAccess::CONTROLLER, "the conversation's voter, anonymous readers included where the application has no accounts")]
 class MessageController extends AbstractApiController
 {
     final public const string QUERY_OPTION_CONVERSATION = 'conversation';

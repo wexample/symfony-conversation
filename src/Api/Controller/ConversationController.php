@@ -2,6 +2,7 @@
 
 namespace Wexample\SymfonyConversation\Api\Controller;
 
+use Wexample\SymfonyApi\Api\Attribute\ApiAccess;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -27,6 +28,7 @@ use Wexample\SymfonyHelpers\Voter\AbstractEntityVoter;
  * one, one opened with someone, one read.
  */
 #[Route(path: '_api/conversation/', name: 'api_conversation_')]
+#[ApiAccess(ApiAccess::CONTROLLER, "the signed-in account's conversations; one conversation by its voter, anonymous readers included where the application has no accounts")]
 class ConversationController extends AbstractApiController
 {
     /** Theirs, the one that last spoke first. */
