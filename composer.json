@@ -1,6 +1,6 @@
 {
   "name": "wexample/symfony-conversation",
-  "version": "7.0.6",
+  "version": "7.0.7",
   "type": "library",
   "license": "MIT",
   "autoload": {
@@ -27,7 +27,7 @@
     "symfony/uid": ">=6.2",
     "wexample/php-pseudocode": ">=3.1.0",
     "wexample/symfony-api": ">=24.0.0",
-    "wexample/symfony-design-system": ">=51.0.0",
+    "wexample/symfony-design-system": ">=52.0.0",
     "wexample/symfony-helpers": ">=19.3.0",
     "wexample/symfony-live": ">=5.8.0",
     "wexample/symfony-pseudocode": ">=4.0.2"
